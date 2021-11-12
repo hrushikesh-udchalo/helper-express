@@ -3,9 +3,9 @@ export interface FareResponse {
     flight_date: string;
     flight_no: string;
     return_flight: number;
-    ret_flight_date: string;
-    ret_flight_no: string;
-    ret_fare_info: Fare[];
+    ret_flight_date?: string;
+    ret_flight_no?: string;
+    ret_fare_info?: Fare[];
     org: string;
     des: string;
     fare_info: Fare[];

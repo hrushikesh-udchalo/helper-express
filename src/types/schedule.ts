@@ -1,4 +1,4 @@
-export interface searchResponse {
+export interface SearchResponse {
     err_code: string;
     org: string;
     des: string;
@@ -6,36 +6,36 @@ export interface searchResponse {
     extra_days: number;
     schedule: {
         direct: Leg[];
-        connecting?: connectingLeg[];
+        connecting?: ConnectingLeg[];
     };
     ret_flight_date?: string;
     ret_schedule?: {
         direct: Leg[];
-        connecting?: connectingLeg[]
+        connecting?: ConnectingLeg[]
     };
 }
 
-export interface connectingLeg{
+export interface ConnectingLeg{
     segments:Leg[]
 }
 
 export interface Leg {
-    flightNumber: string;
+    flight_number: string;
     org: string;
     des: string;
-    departureDate: string;
-    arrivalDate: string;
-    departureTime: string;
-    arrivalTime: string;
+    departure_date: string;
+    arrival_date: string;
+    departure_time: string;
+    arrival_time: string;
     duration: string;
     aircraft: string;
     transit: string;
-    availabilityPerClass: availabilityPerClass[];
+    availability_per_class: AvailabilityPerClass[];
     route: string;
     timestamp?: string;
 }
 
-export interface availabilityPerClass {
-    availabilityClass: string;
+export interface AvailabilityPerClass {
+    class: string;
     availability: string;
 }

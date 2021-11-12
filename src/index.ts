@@ -1,5 +1,6 @@
 import express from "express";
 import { parseString, Builder } from "xml2js";
+import { getFareResponse, test_fare_res } from "./help/fare";
 import { getSearchResponse, test_search_res } from "./help/schedule";
 
 
@@ -36,7 +37,7 @@ app.get('/get_schedule_v2',async(req,res)=>{
 })
 
 app.get('/get_fare_v2',async(req,res)=>{
-    const search = getSearchResponse(test_search_res);
+    const search = getFareResponse(test_fare_res);
     return res.json(search);
 })
 

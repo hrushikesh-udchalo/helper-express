@@ -1,4 +1,4 @@
-import { availabilityPerClass, Leg, searchResponse } from "../types/search";
+import { AvailabilityPerClass, Leg, SearchResponse } from "../types/schedule";
 
 export const test_search_res = {
     err_code: "0",
@@ -6,7 +6,7 @@ export const test_search_res = {
     des: "HKG",
     flight_date: "20200717",
     extra_days: 0,
-    schedule: [ 
+    schedule: [
         [
             [
                 "Q1-Q1367",
@@ -137,24 +137,23 @@ export const test_search_res = {
     ],
 };
 
-
 const getLeg_info = (schedule: any): Leg[] => {
     return schedule.map((item: any): Leg => {
         return {
-            flightNumber: item[0],
+            flight_number: item[0],
             org: item[1],
             des: item[2],
-            departureDate: item[3],
-            arrivalDate: item[4],
-            departureTime: item[5],
-            arrivalTime: item[6],
+            departure_date: item[3],
+            arrival_date: item[4],
+            departure_time: item[5],
+            arrival_time: item[6],
             duration: item[7],
             aircraft: item[8],
             transit: item[9],
-            availabilityPerClass: item[10].map(
-                (avItem: any): availabilityPerClass => {
+            availability_per_class: item[10].map(
+                (avItem: any): AvailabilityPerClass => {
                     return {
-                        availabilityClass: avItem[0],
+                        class: avItem[0],
                         availability: avItem[1],
                     };
                 }
@@ -165,33 +164,31 @@ const getLeg_info = (schedule: any): Leg[] => {
     });
 };
 
-
-const getSearchResponse = (res:any) => {
-    const response:searchResponse={
-        err_code:res.err_code,
-        org:res.org,
-        des:res.des,
-        flight_date:res.flight_date,
-        extra_days:res.extra_days,
-        schedule:{
-            direct:getLeg_info(res.schedule[0]),
-            connecting:res.schedule[1].map((item:any)=>{
+const getSearchResponse = (res: any) => {
+    const response: SearchResponse = {
+        err_code: res.err_code,
+        org: res.org,
+        des: res.des,
+        flight_date: res.flight_date,
+        extra_days: res.extra_days,
+        schedule: {
+            direct: getLeg_info(res.schedule[0]),
+            connecting: res.schedule[1].map((item: any) => {
                 return {
-                    segments:getLeg_info(item)
-                }
-            })
+                    segments: getLeg_info(item),
+                };
+            }),
         },
-        ret_flight_date:res.ret_flight_date,
-        ret_schedule:{
-            direct:getLeg_info(res.ret_schedule[0]),
-            connecting:res.ret_schedule[1].map((item:any)=>{
+        ret_flight_date: res.ret_flight_date,
+        ret_schedule: {
+            direct: getLeg_info(res.ret_schedule[0]),
+            connecting: res.ret_schedule[1].map((item: any) => {
                 return {
-                    segments:getLeg_info(item)
-                }
-            })
-        }
-
-    }
+                    segments: getLeg_info(item),
+                };
+            }),
+        },
+    };
     return response;
 };
 
