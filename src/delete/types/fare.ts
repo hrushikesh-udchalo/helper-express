@@ -41,9 +41,9 @@ export interface Fare {
         child: string;
     };
     other_fee: {
-        adult: [];
-        child: [];
-        infant: [];
+        adult?: OtherFee;
+        child?: OtherFee;
+        infant?: OtherFee;
     };
 }
 
@@ -56,4 +56,10 @@ export interface FareDetails {
     terminal_fee: number;
     booking_fee: number;
     vat: number;
+}
+
+export interface OtherFee {
+    rcs_provision: number;
+    cute_fee: number;
+    user_development_fee: number;
 }
