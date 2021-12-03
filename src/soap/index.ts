@@ -1,25 +1,28 @@
-import { createClientAsync } from 'soap';
+const { soap } = require('strong-soap');
 
-const url = 'http://www.dneonline.com/calculator.asmx?WSDL';
+// const url = 'http://www.dneonline.com/calculator.asmx?WSDL';
+
+const url = 'http://www.webservicex.net/stockquote.asmx?WSDL'
 
 
-export const SOAP = async () =>{
-    const client = await createClientAsync(url);
-    const Add  = client['Add'];
-    try {
-        const result = await promisify(Add,{intA:103,intB:105});
-        return result;
-    } catch (error) {
-        return error;
+export const describe = async ()=>{
+    const client:any = await  createClient(url);
+    const res  = await client.describe();
+    return res;
+}
+
+
+export const Cal = {
+    add:async ()=>{
+        const client:any = await createClient(url);
+        const res = await client.Add({ intA:101, intB:109});
+        return res;
     }
 }
 
 
-const promisify = async (fun: Function, args: any) => {
-    return new Promise((resolve, reject) => {
-        fun(args, (err: any, result: any) => {
-            if (err) reject(err);
-            else resolve(result);
-        });
-    });
+const createClient = (url: string) => {
+    return new Promise((resolve, reject) =>
+        soap.createClient(url, {}, (err: any, client: any) => (err ? reject(err) : resolve(client)))
+    );
 };
