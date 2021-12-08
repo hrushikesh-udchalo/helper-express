@@ -1,5 +1,5 @@
 import express from 'express';
-import { describe ,Methods } from './soap';
+import { describe ,logon, noob, search } from './soap';
 
 
 const app = express();
@@ -7,22 +7,25 @@ const app = express();
 app.use(express.json());
 app.use(express.text());
 
-app.get('/', (req, res) => {
-    res.json('Hey Hrushikesh , Welcome to your made helper....!!!!!!!!!');
+app.get('/',async (req, res) => {
+    // res.json('Hey Hrushikesh , Welcome to helper....!!!!!!!!!');
+     const data = await  noob();
+     return res.json(data);
 });
 
-app.get('/describe', async (req, res) => {
-    const data = await describe();
+app.get('/describe/:method', async (req, res) => {
+    const method = req.params["method"];
+    const data = await describe(method);
     return res.send(data);
 });
 
-app.get('/add', async (req, res) => {
-    const data = await Methods.add();
+app.get('/logon', async (req, res) => {
+    const data = await logon();
     return res.send(data);
 });
 
-app.get('/ip', async (req, res) => {
-    const data = await Methods.ip();
+app.get('/search', async (req, res) => {
+    const data = await search();
     return res.send(data);
 });
 
