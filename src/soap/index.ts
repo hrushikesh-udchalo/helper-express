@@ -1,5 +1,9 @@
 const { soap, QName } = require("strong-soap");
 
+const AGENT_NAME = "HIDDEN";
+const PASSWORD = "HIDDEN";
+const DOMAINCODE = "WWW";
+
 import { createClientAsync as x } from "soap";
 
 // const url1 = "https://sgtestr4xapi.navitaire.com/BookingManager.svc?wsdl";
@@ -31,9 +35,9 @@ export const logon = async () => {
     const body = {
         LogonRequest: {
             logonRequestData: {
-                DomainCode: "WWW",
-                AgentName: "APITESTID",
-                Password: "Spice@123",
+                DomainCode: DOMAINCODE,
+                AgentName: AGENT_NAME,
+                Password: PASSWORD,
             },
         },
     };
@@ -66,7 +70,7 @@ export const logon = async () => {
 export const search = async () => {
     // const sign: any = await logon();
     // const token = sign.result.Signature;
-    const token = `IsdjBPY4ti8=|rkj/yICOKcQmrq2ajoDLiA0+QfsyZER6NOApe2kA+H6uiLJslybvLF5IFxJR7ls55pJSE3TbhwnIi//SuAoiEDH2BC+8fYJxpajrBz+hieMl5/+2h9aQxZGFXJkQmvvGgKJvZ0Kl9BQ=`;
+    const token = ``;
     const file = path.resolve("BookingManager.wsdl");
     const client: any = await createClient(file);
 
