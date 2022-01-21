@@ -1,35 +1,38 @@
-import express from 'express';
-import { describe ,logon, noob, search } from './soap';
+import { ApolloServer, gql } from "apollo-server";
 
+const typeDefs = gql`
+    type Book {
+        title:String
+        author:String
+    }
 
-const app = express();
+    type Query {
+        books:[Book]
+    }
+`;
 
-app.use(express.json());
-app.use(express.text());
+const books = [
+    {
+        title: "The Awakening",
+        author: "Kate Chopin",
+    },
+    {
+        title: "City of Glass",
+        author: "Paul Auster",
+    },
+];
 
-app.get('/',async (req, res) => {
-    // res.json('Hey Hrushikesh , Welcome to helper....!!!!!!!!!');
-     const data = await  noob();
-     return res.json(data);
-});
+const resolvers = {
+    Query: {
+        books: () => books,
+    },
+};
 
-app.get('/describe/:method', async (req, res) => {
-    const method = req.params["method"];
-    const data = await describe(method);
-    return res.send(data);
-});
+// The ApolloServer constructor requires two parameters: your schema
+// definition and your set of resolvers.
+const server = new ApolloServer({ typeDefs, resolvers });
 
-app.get('/logon', async (req, res) => {
-    const data = await logon();
-    return res.send(data);
-});
-
-app.get('/search', async (req, res) => {
-    const data = await search();
-    return res.send(data);
-});
-
-
-app.listen(3001, () => {
-    console.log('Listening on http://localhost:3001');
+// The `listen` method launches a web server.
+server.listen().then(({ url }) => {
+    console.log(`🚀  Server ready at ${url}`);
 });
