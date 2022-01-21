@@ -1,13 +1,14 @@
-import { ApolloServer, gql } from "apollo-server";
+import { ApolloServer, gql } from "apollo-server-express";
+import express from "express";
 
 const typeDefs = gql`
     type Book {
-        title:String
-        author:String
+        title: String
+        author: String
     }
 
     type Query {
-        books:[Book]
+        books: [Book]
     }
 `;
 
@@ -28,11 +29,10 @@ const resolvers = {
     },
 };
 
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
+const PORT = process.env.PORT || "4000";
+const app = express();
 const server = new ApolloServer({ typeDefs, resolvers });
-
-// The `listen` method launches a web server.
-server.listen().then(({ url }) => {
-    console.log(`🚀  Server ready at ${url}`);
+server.applyMiddleware({ app });
+app.listen({ port: PORT }, () => {
+    `🚀  Server ready at http://localhost:${PORT}${server.graphqlPath}`;
 });
