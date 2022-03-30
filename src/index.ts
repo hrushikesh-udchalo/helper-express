@@ -1,4 +1,5 @@
-import express from "express";
+import express, { Request } from "express";
+import EJS from "./ejs";
 
 const app = express();
 
@@ -11,8 +12,14 @@ app.get("/", async (req, res) => {
     });
 });
 
-app.get('/unzip',async(req,res)=>{
-    return "Hi, No Unzip";
+app.post("/ejs", async (req, res) => {
+    try {
+        const { text, data } = req.body;
+        const ejs = await EJS.getEjsString(text, data);
+        return res.send(ejs);
+    } catch (error) {
+        return "Something Went Wrong !!!";
+    }
 });
 
 app.listen(3001, () => {
